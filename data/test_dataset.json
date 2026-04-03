@@ -24,49 +24,49 @@
     "id": "L1-004",
     "level": 1,
     "complexity": "single_entity_with_filter",
-    "question": "Show Part WHT001812A only when its status is active.",
+    "question": "Show Part @part001 only when its status is active.",
     "cypher": "MATCH (p:Part {identifier: '@part001'}) WHERE p.current_status = 'ACTIVE' RETURN p"
   },
   {
     "id": "L1-005",
     "level": 1,
     "complexity": "single_entity",
-    "question": "What is the current status of Part 18D000731?",
+    "question": "What is the current status of Part @part002?",
     "cypher": "MATCH (p:Part {identifier: '@part002'}) RETURN p.current_status"
   },
   {
     "id": "L1-006",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Return Part N10435508 together with its current specification.",
+    "question": "Return Part @part003 together with its current specification.",
     "cypher": "MATCH (p:Part {identifier: '@part003'})-[:CURRENT_SPECIFICATION]-(ps:PartSpecification) RETURN p, ps"
   },
   {
     "id": "L1-007",
     "level": 1,
     "complexity": "single_entity_with_filter",
-    "question": "Show Personnel TFA2A46786 if its name is @name001.",
+    "question": "Show Personnel @personnel001 if its name is @name001.",
     "cypher": "MATCH (per:Personnel {identifier: '@personnel001'}) WHERE per.name = '@name001' RETURN per"
   },
   {
     "id": "L1-008",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Return all properties of Personnel tfa2a46789 if role as Operator.",
+    "question": "Return all properties of Personnel @personnel002 if role as Operator.",
     "cypher": "MATCH (per:Personnel {identifier: '@personnel002'}) WHERE per.role = 'operator' RETURN per"
   },
   {
     "id": "L1-009",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Give me the basic profile of Supplier 11152.",
+    "question": "Give me the basic profile of Supplier @supplier001.",
     "cypher": "MATCH (s:Supplier {identifier: '@supplier001'}) RETURN s"
   },
   {
     "id": "L1-010",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Return all properties of Supplier 10151.",
+    "question": "Return all properties of Supplier @supplier002.",
     "cypher": "MATCH (s:Supplier {identifier: '@supplier002'}) RETURN s"
   },
   {
@@ -94,42 +94,42 @@
     "id": "L1-014",
     "level": 1,
     "complexity": "single_entity",
-    "question": "What is the name of VehicleFamily 321?",
+    "question": "What is the name of VehicleFamily @vehiclefamily001?",
     "cypher": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'}) RETURN vf.name"
   },
   {
     "id": "L1-015",
     "level": 1,
     "complexity": "single_entity_with_filter",
-    "question": "Show Equipment MFT-D20 if its current status is Active.",
+    "question": "Show Equipment @equipment001 if its current status is Active.",
     "cypher": "MATCH (e:Equipment {identifier: '@equipment001'}) WHERE e.current_status = 'ACTIVE' RETURN e"
   },
   {
     "id": "L1-016",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Return the key properties of Equipment MFT-D20.",
+    "question": "Return the key properties of Equipment @equipment001.",
     "cypher": "MATCH (e:Equipment {identifier: '@equipment001'})-[:CURRENT_SPECIFICATION]-(es:EquipmentSpecification) RETURN e, es"
   },
   {
     "id": "L1-017",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Show details for Tool D8300384.",
+    "question": "Show details for Tool @equipment002.",
     "cypher": "MATCH (t:Tool {identifier: '@equipment002'})-[:CURRENT_SPECIFICATION]-(ts:ToolSpecification) RETURN t, ts"
   },
   {
     "id": "L1-018",
     "level": 1,
     "complexity": "single_entity_with_filter",
-    "question": "Show Production Order PO1015 if it is currently Active.",
+    "question": "Show Production Order @productionorder001 if it is currently Active.",
     "cypher": "MATCH (po:ProductionOrder {identifier: '@productionorder001'}) WHERE po.current_status = 'ACTIVE' RETURN po"
   },
   {
     "id": "L1-019",
     "level": 1,
     "complexity": "single_entity",
-    "question": "Show the batch details for Part Batch WHT001812A-150915.",
+    "question": "Show the batch details for Part Batch @partbatch001.",
     "cypher": "MATCH (pb:PartBatch {batchNumber: '@partbatch001'}) RETURN pb.batchNumber, pb.initialQuantity, pb.receiveTime"
   },
   {
@@ -171,78 +171,78 @@
     "id": "L2-005",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which Production Order did PartBatch 04E129651H-151005 used for?",
+    "question": "Which Production Order did PartBatch @partbatch002 used for?",
     "cypher": "MATCH (po:ProductionOrder)-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(pi:PartBatch{batchNumber:'@partbatch002'}) RETURN po AS ProductionOrder"
   },
   {
     "id": "L2-006",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which Operation related to PartBatch 6N0877236-151005?",
+    "question": "Which Operation related to PartBatch @partbatch003?",
     "cypher": "MATCH (pi:PartBatch {batchNumber: '@partbatch003'})<-[:CONSUMES_PART]-(:OperationalTask)-[:INSTANTIATES_OPERATION]->(:OperationVersion)<-[:CURRENT_VERSION]-(op:Operation) RETURN op AS Operation"
   },
   {
     "id": "L2-007",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which Operation corresponded to the EquipmentInstance MFT-D2X?",
+    "question": "Which Operation corresponded to the EquipmentInstance @equipment003?",
     "cypher": "MATCH (pi:EquipmentInstance {identifier: '@equipment003'})<-[:USE_EQUIPMENT]-(:OperationalTask)-[:INSTANTIATES_OPERATION]->(:OperationVersion)<-[:CURRENT_VERSION]-(op:Operation) RETURN op AS Operation"
   },
   {
     "id": "L2-008",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which Operational Tasks belonging to Production Process TFA2A051015A start after October 2015-10-03?",
+    "question": "Which Operational Tasks belonging to Production Process @productionprocess001 start after October 2015-10-03?",
     "cypher": "MATCH (pp:ProductionProcess {identifier: '@productionprocess001'})-[:HAS_TASK]->(t:OperationalTask) WHERE pp.startTime >= '2015-10-04 00:00:00' RETURN t"
   },
   {
     "id": "L2-009",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which Vehicles produced by Production Process TFA2A051015A were produced at October 4th, 2015?",
+    "question": "Which Vehicles produced by Production Process @productionprocess001 were produced at October 4th, 2015?",
     "cypher": "MATCH (pp:ProductionProcess {identifier: '@productionprocess001'})-[:PRODUCES_VEHICLE]->(v:Vehicle) WHERE v.producedTime >= '2015-10-04 00:00:00' and v.producedTime < '2015-10-05 00:00:00' RETURN v"
   },
   {
     "id": "L2-010",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which Operation does Personnel TFA2A78919 worked on 2015-10-1?",
+    "question": "Which Operation does Personnel @personnel003 worked on 2015-10-1?",
     "cypher": "MATCH (p:Personnel{identifier:'@personnel003'})<-[:HAS_PARTICIPANT]-(ot:OperationalTask)-[:INSTANTIATES_OPERATION]->(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) WHERE ot.startTime>='2015-10-01 00:00:00' AND ot.endTime<='2015-10-02 00:00:00' RETURN o AS Operation"
   },
   {
     "id": "L2-011",
     "level": 2,
     "complexity": "relational_via_spec",
-    "question": "Which Personnel did Operation VW321-1-001-01 worked on 2015-10-1?",
+    "question": "Which Personnel did Operation @operation001 worked on 2015-10-1?",
     "cypher": "MATCH (p:Personnel)<-[:HAS_PARTICIPANT]-(o:OperationalTask)-[:INSTANTIATES_OPERATION]->(:OperationVersion)<-[:CURRENT_VERSION]-(:Operation{identifier:'@operation001'}) WHERE o.startTime>='2015-10-01 00:00:00' AND o.endTime<='2015-10-02 00:00:00' RETURN p"
   },
   {
     "id": "L2-012",
     "level": 2,
     "complexity": "relational_via_spec",
-    "question": "Which operations require Part 180711951B?",
+    "question": "Which operations require Part @part004?",
     "cypher": "MATCH (:Part {identifier: '@part004'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(:OperationVersion)<-[:CURRENT_VERSION]-(op:Operation) RETURN op"
   },
   {
     "id": "L2-013",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which VehicleVariants in VehicleFamily 321 have an 96kw power?",
+    "question": "Which VehicleVariants in VehicleFamily @vehiclefamily001 have an 96kw power?",
     "cypher": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) WHERE vv.power = '96kw' RETURN vv"
   },
   {
     "id": "L2-014",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which shop has Euqipment instance 2425301?",
+    "question": "Which shop has Euqipment instance @equipmentinstance001?",
     "cypher": "MATCH (a:AssemblyShop)<-[:OCCURS_AT]-(p:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:USE_EQUIPMENT]->(e:EquipmentInstance{identifier:'@equipmentinstance001'}) RETURN a AS AssemblyShop"
   },
   {
     "id": "L2-015",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which VehicleFamilies is Assembly Shop TFA2A qualified to produce?",
-    "cypher": "MATCH (s:ProductionShop {identifier: 'TFA2A'})-[:QUALIFIED_PRODUCE]->(:VehicleVariant)<-[:HAS_VARIANT]-(vf:VehicleFamily) RETURN vf"
+    "question": "Which VehicleFamilies is Assembly Shop HLA1A qualified to produce?",
+    "cypher": "MATCH (s:ProductionShop {identifier: 'HLA1A'})-[:QUALIFIED_PRODUCE]->(:VehicleVariant)<-[:HAS_VARIANT]-(vf:VehicleFamily) RETURN vf"
   },
   {
     "id": "L2-016",
@@ -255,91 +255,91 @@
     "id": "L2-017",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which active Production Orders are assigned to ManufacturingPlant tfa2?",
+    "question": "Which active Production Orders are assigned to ManufacturingPlant @productionshop001?",
     "cypher": "MATCH (po:ProductionOrder)-[:ASSIGNED_TO]->(mp:ManufacturingPlant {identifier: '@productionshop001'}) WHERE po.current_status = 'ACTIVE' RETURN po"
   },
   {
     "id": "L2-018",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which Vehicles used Part batch 1KD201550-150915?",
+    "question": "Which Vehicles used Part batch @partbatch004?",
     "cypher": "MATCH (v:Vehicle)<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(p:PartBatch{batchNumber:'@partbatch004'}) RETURN v"
   },
   {
     "id": "L2-019",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which Operational Tasks does Personnel TFA2A78919 participate in October 2015?",
+    "question": "Which Operational Tasks does Personnel @personnel003 participate in October 2015?",
     "cypher": "MATCH (per:Personnel {identifier: '@personnel003'})<-[:HAS_PARTICIPANT]-(t:OperationalTask) WHERE t.startTime >= '2015-10-01 00:00:00' and t.endTime < '2015-11-1 00:00:00' RETURN t"
   },
   {
     "id": "L2-020",
     "level": 2,
     "complexity": "relational_direct",
-    "question": "Which plant related to bacth part 1KD201550-151005?",
+    "question": "Which plant related to bacth part @partbatch005?",
     "cypher": "MATCH (o:ManufacturingPlant)<-[:ASSIGNED_TO]-(:ProductionOrder)-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(p:PartBatch{batchNumber:'@partbatch005'}) RETURN o AS ManufacturingPlant"
   },
   {
     "id": "L2-021",
     "level": 2,
     "complexity": "relational_via_spec",
-    "question": "Which VehicleVariant use Part 18D713203T?",
+    "question": "Which VehicleVariant use Part @part005?",
     "cypher": "MATCH (vv:VehicleVariant)-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)-[:HAS_BOMITEM]->(ps:PartSpecification)<-[:CURRENT_SPECIFICATION]-(p:Part{identifier:'@part005'}) RETURN vv"
   },
   {
     "id": "L2-022",
     "level": 2,
     "complexity": "relational_via_version",
-    "question": "Show me vehicle family produced in plant tfa2.",
+    "question": "Show me vehicle family produced in plant @productionshop001.",
     "cypher": "MATCH (v:VehicleFamily)-[:HAS_VARIANT]->(:VehicleVariant)<-[:QUALIFIED_PRODUCE]-(:AssemblyShop)<-[:HAS_SHOP]-(m:ManufacturingPlant{identifier:'@productionshop001'}) RETURN v AS VehicleFamily"
   },
   {
     "id": "L2-023",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Show me order PO1015's production plan at 2025-10-01.",
+    "question": "Show me order @productionorder001's production plan at 2025-10-01.",
     "cypher": "MATCH (po:ProductionOrder{identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(pv:ProductionPlanVersion)<-[:CURRENT_VERSION]-(pp:ProductionPlan) WHERE pv.plannedStartTime >= '2015-10-01 00:00:00' and pv.plannedEndTime < '2015-10-02 00:00:00' RETURN po AS ProductionOrder"
   },
   {
     "id": "L2-024",
     "level": 2,
     "complexity": "relational_via_version",
-    "question": "Which VehicleVariant does Production Order PO1015 cover?",
+    "question": "Which VehicleVariant does Production Order @productionorder001 cover?",
     "cypher": "MATCH (po:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(pov:ProductionOrderVersion)-[:ORDERS_VARIANT]->(:VehicleVariantSpecification)<-[:CURRENT_SPECIFICATION]-(vv:VehicleVariant) RETURN vv"
   },
   {
     "id": "L2-025",
     "level": 2,
     "complexity": "relational_via_version",
-    "question": "What vehicle variant related to operation VW321-4-078-02?",
+    "question": "What vehicle variant related to operation @operation002?",
     "cypher": "MATCH (vv:VehicleVariant)<-[:HAS_VARIANT]-(:VehicleFamily)-[:DESCRIBED_IN]->(:ProductDocument)-[:CURRENT_VERSION]->(pdv:ProductDocumentVersion)<-[:DERIVED_FROM]-(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation{identifier:'@operation002'}) RETURN vv AS VehicleVariant, o AS Operation"
   },
   {
     "id": "L2-026",
     "level": 2,
     "complexity": "relational_via_version",
-    "question": "Show me the part suppliers related to operation VW321-1-001-01.",
+    "question": "Show me the part suppliers related to operation @operation001.",
     "cypher": "MATCH (o:Operation{identifier:'@operation001'})-[:CURRENT_VERSION]->(:OperationVersion)-[:REQUIRES_PART]->(:PartSpecification)-[:HAS_SUPPLIER]->(s:Supplier) RETURN s AS Supplier"
   },
   {
     "id": "L2-027",
     "level": 2,
     "complexity": "relational_via_spec",
-    "question": "Which VehicleVariants include Part 18D400040NK in their BOM through the part's current specification?",
+    "question": "Which VehicleVariants include Part @part006 in their BOM through the part's current specification?",
     "cypher": "MATCH (p:Part {identifier: '@part006'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:HAS_BOMITEM]-(:VehicleVariantSpecification)<-[:CURRENT_SPECIFICATION]-(vv:VehicleVariant) RETURN DISTINCT vv"
   },
   {
     "id": "L2-028",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Show me the operations related to part suppliers 10809.",
+    "question": "Show me the operations related to part suppliers @supplier003.",
     "cypher": "MATCH (o:Operation)-[:CURRENT_VERSION]->(:OperationVersion)-[:REQUIRES_PART]->(:PartSpecification)-[:HAS_SUPPLIER]->(s:Supplier{identifier:'@supplier003'}) RETURN o AS Operation"
   },
   {
     "id": "L2-029",
     "level": 2,
     "complexity": "relational_with_filter",
-    "question": "Which VehicleVariants in VehicleFamily 321 have an 81kw power?",
+    "question": "Which VehicleVariants in VehicleFamily @vehiclefamily001 have an 81kw power?",
     "cypher": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) WHERE vv.power = '81kw' RETURN vv"
   },
   {
@@ -354,7 +354,7 @@
     "level": 3,
     "complexity": "chain",
     "question": "Which plant does the production shop that manufactures Vehicle @vehicle001 belong to?",
-    "cypher": "MATCH (v:Vehicle {identifier: '@vehicle001'})<-[:PRODUCES_VEHICLE]-(pp:ProductionProcess)-[:OCCURS_AT]->(:ProductionShop{identifier:'TFA2A'})<-[:HAS_SHOP]-(m:ManufacturingPlant) RETURN m"
+    "cypher": "MATCH (v:Vehicle {identifier: '@vehicle001'})<-[:PRODUCES_VEHICLE]-(pp:ProductionProcess)-[:OCCURS_AT]->(:ProductionShop{identifier:'HLA1A'})<-[:HAS_SHOP]-(m:ManufacturingPlant) RETURN m"
   },
   {
     "id": "L3-002",
@@ -374,42 +374,42 @@
     "id": "L3-004",
     "level": 3,
     "complexity": "chain",
-    "question": "Which Vehicles belong to the VehicleVariants under VehicleFamily 321?",
+    "question": "Which Vehicles belong to the VehicleVariants under VehicleFamily @vehiclefamily001?",
     "cypher": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant)-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)<-[:CONFIGURED_TO]-(v:Vehicle) RETURN vf, vv, v"
   },
   {
     "id": "L3-005",
     "level": 3,
     "complexity": "chain",
-    "question": "Which Part used by Operation VW321-7-150-01 in plant TFA2?",
+    "question": "Which Part used by Operation @operation003 in plant @productionshop001?",
     "cypher": "MATCH (mp:ManufacturingPlant {identifier: '@productionshop001'})-[:HAS_SHOP]->(:ProductionShop)<-[:QUALIFIED_FOR]-(o:Operation{identifier:'@operation003'})-[:CURRENT_VERSION]->(:OperationVersion)-[:REQUIRES_PART]->(:PartSpecification)<-[:CURRENT_SPECIFICATION]-(p:Part) RETURN DISTINCT mp, o, p"
   },
   {
     "id": "L3-006",
     "level": 3,
     "complexity": "chain",
-    "question": "Which ProductionPlans are associated with the ProductionOrders assigned to ManufacturingPlant TFA2?",
+    "question": "Which ProductionPlans are associated with the ProductionOrders assigned to ManufacturingPlant @productionshop001?",
     "cypher": "MATCH (mp:ManufacturingPlant {identifier: '@productionshop001'})<-[:ASSIGNED_TO]-(po:ProductionOrder)-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:CURRENT_VERSION]-(pl:ProductionPlan) RETURN mp, po, pl"
   },
   {
     "id": "L3-007",
     "level": 3,
     "complexity": "chain",
-    "question": "Which VehicleVariant do the Vehicles produced by ProductionProcess TFA2A011015A belong to?",
+    "question": "Which VehicleVariant do the Vehicles produced by ProductionProcess @productionprocess002 belong to?",
     "cypher": "MATCH (pp:ProductionProcess {identifier: '@productionprocess002'})-[:PRODUCES_VEHICLE]->(v:Vehicle)-[:CONFIGURED_TO]->(:VehicleVariantSpecification)<-[:CURRENT_SPECIFICATION]-(vv:VehicleVariant) RETURN DISTINCT pp, v, vv"
   },
   {
     "id": "L3-008",
     "level": 3,
     "complexity": "chain",
-    "question": "Which ProductionShops are qualified to perform Operations that require Part WHT001812A?",
+    "question": "Which ProductionShops are qualified to perform Operations that require Part @part001?",
     "cypher": "MATCH (p:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation)-[:QUALIFIED_FOR]->(ps:ProductionShop) RETURN DISTINCT p, o, ps"
   },
   {
     "id": "L3-009",
     "level": 3,
     "complexity": "chain",
-    "question": "Which Personnel are assigned to the ProductionProcesses realizing ProductionPlan PL011015?",
+    "question": "Which Personnel are assigned to the ProductionProcesses realizing ProductionPlan @productionplan001?",
     "cypher": "MATCH (pl:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(pp:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:HAS_PARTICIPANT]->(per:Personnel) RETURN DISTINCT pl, pp, per"
   },
   {
@@ -423,64 +423,64 @@
     "id": "L3-011",
     "level": 3,
     "complexity": "and",
-    "question": "Which vehicles were produced in shop TFA2A and are also assigned to production order PO1015?",
-    "cypher": "MATCH (:AssemblyShop {identifier: 'TFA2A'})<-[:OCCURS_AT]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) MATCH (:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v) RETURN DISTINCT v"
+    "question": "Which vehicles were produced in shop HLA1A and are also assigned to production order @productionorder001?",
+    "cypher": "MATCH (:AssemblyShop {identifier: 'HLA1A'})<-[:OCCURS_AT]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) MATCH (:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v) RETURN DISTINCT v"
   },
   {
     "id": "L3-012",
     "level": 3,
     "complexity": "and",
-    "question": "Which operations use Part WHT001812A and are also performed in AssemblyShop TFA2A?",
-    "cypher": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(ov:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) MATCH (o)-[:QUALIFIED_FOR]->(:AssemblyShop {identifier: 'TFA2A'}) RETURN DISTINCT o"
+    "question": "Which operations use Part @part001 and are also performed in AssemblyShop HLA1A?",
+    "cypher": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(ov:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) MATCH (o)-[:QUALIFIED_FOR]->(:AssemblyShop {identifier: 'HLA1A'}) RETURN DISTINCT o"
   },
   {
     "id": "L3-013",
     "level": 3,
     "complexity": "and",
-    "question": "Which personnel worked on ProductionProcess TFA2A011015A and also handled Vehicle @vehicle001?",
+    "question": "Which personnel worked on ProductionProcess @productionprocess002 and also handled Vehicle @vehicle001?",
     "cypher": "MATCH (:ProductionProcess {identifier: '@productionprocess002'})-[:HAS_TASK]->(:OperationalTask)-[:HAS_PARTICIPANT]->(per:Personnel) MATCH (:Vehicle {identifier: '@vehicle001'})<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:HAS_PARTICIPANT]->(per) RETURN DISTINCT per"
   },
   {
     "id": "L3-014",
     "level": 3,
     "complexity": "and",
-    "question": "Which VehicleVariants belong to VehicleFamily 321 and are qualified to be produced at AssemblyShop TFA2A?",
-    "cypher": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) MATCH (:AssemblyShop {identifier: 'TFA2A'})-[:QUALIFIED_PRODUCE]->(vv) RETURN DISTINCT vv"
+    "question": "Which VehicleVariants belong to VehicleFamily @vehiclefamily001 and are qualified to be produced at AssemblyShop HLA1A?",
+    "cypher": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) MATCH (:AssemblyShop {identifier: 'HLA1A'})-[:QUALIFIED_PRODUCE]->(vv) RETURN DISTINCT vv"
   },
   {
     "id": "L3-015",
     "level": 3,
     "complexity": "and",
-    "question": "Which Parts are in the BOM of VehicleVariant @vehiclevariant003 and also supplied by Supplier 11152?",
+    "question": "Which Parts are in the BOM of VehicleVariant @vehiclevariant003 and also supplied by Supplier @supplier001?",
     "cypher": "MATCH (:VehicleVariant {identifier: '@vehiclevariant003'})-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)-[:HAS_BOMITEM]->(ps:PartSpecification)-[:HAS_SUPPLIER]->(:Supplier {identifier: '@supplier001'}) MATCH (p:Part)-[:CURRENT_SPECIFICATION]->(ps) RETURN DISTINCT p"
   },
   {
     "id": "L3-016",
     "level": 3,
     "complexity": "and",
-    "question": "Which Operations require Part WHT001812A and are also applicable to VehicleVariant @vehiclevariant004?",
+    "question": "Which Operations require Part @part001 and are also applicable to VehicleVariant @vehiclevariant004?",
     "cypher": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(ov:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) MATCH (:VehicleVariant {identifier: '@vehiclevariant004'})-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)<-[:APPLICABLE_TO]-(ov) RETURN DISTINCT o"
   },
   {
     "id": "L3-017",
     "level": 3,
     "complexity": "and",
-    "question": "Which Vehicles are produced under ProductionOrder PO1015 and belong to VehicleVariant @vehiclevariant004?",
+    "question": "Which Vehicles are produced under ProductionOrder @productionorder001 and belong to VehicleVariant @vehiclevariant004?",
     "cypher": "MATCH (:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) MATCH (:VehicleVariant {identifier: '@vehiclevariant004'})-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)<-[:CONFIGURED_TO]-(v) RETURN DISTINCT v"
   },
   {
     "id": "L3-018",
     "level": 3,
     "complexity": "and",
-    "question": "Which Vehicles were produced under ProductionPlan PL011015 and consumed batch part 1KD201550-150915?",
+    "question": "Which Vehicles were produced under ProductionPlan @productionplan001 and consumed batch part @partbatch004?",
     "cypher": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) MATCH (v)<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(:PartBatch {batchNumber: '@partbatch004'}) RETURN DISTINCT v"
   },
   {
     "id": "L3-019",
     "level": 3,
     "complexity": "and",
-    "question": "Which ProductionProcesses realize ProductionPlan PL011015 and occur at AssemblyShop TFA2A?",
-    "cypher": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(pp:ProductionProcess) MATCH (pp)-[:OCCURS_AT]->(:AssemblyShop {identifier: 'TFA2A'}) RETURN DISTINCT pp"
+    "question": "Which ProductionProcesses realize ProductionPlan '@productionplan001 and occur at AssemblyShop HLA1A?",
+    "cypher": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(pp:ProductionProcess) MATCH (pp)-[:OCCURS_AT]->(:AssemblyShop {identifier: 'HLA1A'}) RETURN DISTINCT pp"
   },
   {
     "id": "L3-020",
@@ -493,15 +493,15 @@
     "id": "L3-021",
     "level": 3,
     "complexity": "or",
-    "question": "Which operations are related to Part WHT001812A or Part 18D000731?",
+    "question": "Which operations are related to Part @part001 or Part @part002?",
     "cypher": "MATCH (p:Part)-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) WHERE p.identifier IN ['@part001', '@part002'] RETURN DISTINCT o"
   },
   {
     "id": "L3-022",
     "level": 3,
     "complexity": "or",
-    "question": "Show me all vehicles produced by ProductionProcess TFA2A011015A or ProductionProcess TFA2A011015B.",
-    "cypher": "MATCH (pp:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) WHERE pp.identifier IN ['@productionprocess002', '@personnel004'] RETURN DISTINCT v"
+    "question": "Show me all vehicles produced by ProductionProcess @productionprocess002 or ProductionProcess @productionprocess003.",
+    "cypher": "MATCH (pp:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) WHERE pp.identifier IN ['@productionprocess002', '@productionprocess003'] RETURN DISTINCT v"
   },
   {
     "id": "L3-023",
@@ -521,21 +521,21 @@
     "id": "L3-025",
     "level": 3,
     "complexity": "or",
-    "question": "Which Parts are supplied by Supplier 11152 or Supplier 11286?",
+    "question": "Which Parts are supplied by Supplier @supplier001 or Supplier @supplier004?",
     "cypher": "MATCH (p:Part)-[:CURRENT_SPECIFICATION]->(:PartSpecification)-[:HAS_SUPPLIER]->(s:Supplier) WHERE s.identifier IN ['@supplier001', '@supplier004'] RETURN DISTINCT p"
   },
   {
     "id": "L3-026",
     "level": 3,
     "complexity": "or",
-    "question": "Which Vehicles were produced under ProductionPlan PL011015 or worked on by Personnel TFA2A46786?",
-    "cypher": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN DISTINCT v UNION MATCH (:Personnel {identifier: '@personnel001'})<-[:HAS_PARTICIPANT]-(:OperationalTask)<-[:HAS_TASK]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN DISTINCT v"
+    "question": "Which Vehicles were produced under ProductionPlan @productionplan001 or worked on by Personnel @productionplan001?",
+    "cypher": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN DISTINCT v UNION MATCH (:Personnel {identifier: '@productionplan001'})<-[:HAS_PARTICIPANT]-(:OperationalTask)<-[:HAS_TASK]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN DISTINCT v"
   },
   {
     "id": "L3-027",
     "level": 3,
     "complexity": "or",
-    "question": "Which Suppliers were used in producing Vehicle @vehicle005 or under ProductionOrder PO1015?",
+    "question": "Which Suppliers were used in producing Vehicle @vehicle005 or under ProductionOrder @productionorder001?",
     "cypher": "MATCH (:Vehicle {identifier: '@vehicle005'})<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(:PartInstance)-[:SUPPLIED_BY]->(s:Supplier) RETURN DISTINCT s.identifier, s.name UNION MATCH (:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(:PartInstance)-[:SUPPLIED_BY]->(s:Supplier) RETURN DISTINCT s.identifier, s.name"
   },
   {
@@ -549,21 +549,21 @@
     "id": "L3-029",
     "level": 3,
     "complexity": "or",
-    "question": "Which ProductionShops belong to ManufacturingPlant TFA2 or are used by ProductionProcess TFA2A011015A?",
+    "question": "Which ProductionShops belong to ManufacturingPlant @productionshop001 or are used by ProductionProcess @productionprocess002?",
     "cypher": "MATCH (:ManufacturingPlant {identifier: '@productionshop001'})-[:HAS_SHOP]->(s:ProductionShop) RETURN DISTINCT s UNION MATCH (:ProductionProcess {identifier: '@productionprocess002'})-[:OCCURS_AT]->(s:ProductionShop) RETURN DISTINCT s"
   },
   {
     "id": "L3-030",
     "level": 3,
     "complexity": "or",
-    "question": "Which VehicleVariants in VehicleFamily 321 have 96KW or 81KW powertrains?",
+    "question": "Which VehicleVariants in VehicleFamily @vehiclefamily001 have 96KW or 81KW powertrains?",
     "cypher": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) WHERE vv.power IN ['96kw', '81kw'] RETURN DISTINCT vv"
   },
   {
     "id": "L3-031",
     "level": 3,
     "complexity": "independent",
-    "question": "Tell me about Vehicle @vehicle001, ProductionOrder TFA2A011015A, and Part WHT001812A.",
+    "question": "Tell me about Vehicle @vehicle001, ProductionOrder @productionprocess002, and Part @part001.",
     "cypher1": "MATCH (v:Vehicle {identifier: '@vehicle001'}) RETURN v",
     "cypher2": "MATCH (po:ProductionOrder {identifier: '@productionprocess002'}) RETURN po",
     "cypher3": "MATCH (p:Part {identifier: '@part001'}) RETURN p"
@@ -572,7 +572,7 @@
     "id": "L3-032",
     "level": 3,
     "complexity": "independent",
-    "question": "Which Operations require Part WHT001812A? Also tell me about Vehicle @vehicle001.",
+    "question": "Which Operations require Part @part001? Also tell me about Vehicle @vehicle001.",
     "cypher1": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation) RETURN o",
     "cypher2": "MATCH (v:Vehicle {identifier: '@vehicle001'}) RETURN v"
   },
@@ -580,7 +580,7 @@
     "id": "L3-033",
     "level": 3,
     "complexity": "independent",
-    "question": "Which Suppliers provide Part WHT001812A? Also tell me about VehicleVariant @vehiclevariant004.",
+    "question": "Which Suppliers provide Part @part001? Also tell me about VehicleVariant @vehiclevariant004.",
     "cypher1": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)-[:HAS_SUPPLIER]->(s:Supplier) RETURN DISTINCT s",
     "cypher2": "MATCH (vv:VehicleVariant {identifier: '@vehiclevariant004'}) RETURN vv"
   },
@@ -588,7 +588,7 @@
     "id": "L3-034",
     "level": 3,
     "complexity": "independent",
-    "question": "Tell me about ManufacturingPlant TFA2, VehicleFamily 321, and Personnel TFA2A46786.",
+    "question": "Tell me about ManufacturingPlant @productionshop001, VehicleFamily @vehiclefamily001, and Personnel @personnel001.",
     "cypher1": "MATCH (m:ManufacturingPlant {identifier: '@productionshop001'}) RETURN m",
     "cypher2": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'}) RETURN vf",
     "cypher3": "MATCH (p:Personnel {identifier: '@personnel001'}) RETURN p"
@@ -597,7 +597,7 @@
     "id": "L3-035",
     "level": 3,
     "complexity": "independent",
-    "question": "Which Vehicles are produced under ProductionPlan PL011015? Also tell me about Part WHT001812A.",
+    "question": "Which Vehicles are produced under ProductionPlan @productionplan001? Also tell me about Part @part001.",
     "cypher1": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN DISTINCT v",
     "cypher2": "MATCH (p:Part {identifier: '@part001'}) RETURN p"
   },
@@ -605,7 +605,7 @@
     "id": "L3-036",
     "level": 3,
     "complexity": "independent",
-    "question": "Tell me about AssemblyShop AS321, ProductionOrder TFA2A011015A, and VehicleVariant @vehiclevariant004.",
+    "question": "Tell me about AssemblyShop @productionshop002, ProductionOrder @productionprocess002, and VehicleVariant @vehiclevariant004.",
     "cypher1": "MATCH (a:AssemblyShop {identifier: '@productionshop002'}) RETURN a",
     "cypher2": "MATCH (po:ProductionOrder {identifier: '@productionprocess002'}) RETURN po",
     "cypher3": "MATCH (vv:VehicleVariant {identifier: '@vehiclevariant004'}) RETURN vv"
@@ -614,7 +614,7 @@
     "id": "L3-037",
     "level": 3,
     "complexity": "independent",
-    "question": "Who are the Personnel working on Vehicle @vehicle001? Also tell me about ProductionProcess TFA2A011015A.",
+    "question": "Who are the Personnel working on Vehicle @vehicle001? Also tell me about ProductionProcess @productionprocess002.",
     "cypher1": "MATCH (:Vehicle {identifier: '@vehicle001'})<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:HAS_PARTICIPANT]->(per:Personnel) RETURN DISTINCT per",
     "cypher2": "MATCH (pp:ProductionProcess {identifier: '@productionprocess002'}) RETURN pp"
   },
@@ -622,7 +622,7 @@
     "id": "L3-038",
     "level": 3,
     "complexity": "independent",
-    "question": "Which ManufacturingPlants build VehicleFamily 321? Also tell me about ProductionOrder PO1015.",
+    "question": "Which ManufacturingPlants build VehicleFamily @vehiclefamily001? Also tell me about ProductionOrder @productionprocess002.",
     "cypher1": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(:VehicleVariant)<-[:QUALIFIED_PRODUCE]-(:AssemblyShop)<-[:HAS_SHOP]-(mp:ManufacturingPlant) RETURN DISTINCT mp",
     "cypher2": "MATCH (po:ProductionOrder {identifier: '@productionprocess002'}) RETURN po"
   },
@@ -630,7 +630,7 @@
     "id": "L3-039",
     "level": 3,
     "complexity": "independent",
-    "question": "Tell me about Vehicle @vehicle001, Part WHT001812A, and Personnel TFA2A46786.",
+    "question": "Tell me about Vehicle @vehicle001, Part @part001, and Personnel @personnel001.",
     "cypher1": "MATCH (v:Vehicle {identifier: '@vehicle001'}) RETURN v",
     "cypher2": "MATCH (p:Part {identifier: '@part001'}) RETURN p",
     "cypher3": "MATCH (per:Personnel {identifier: '@personnel001'}) RETURN per"
@@ -639,7 +639,7 @@
     "id": "L3-040",
     "level": 3,
     "complexity": "independent",
-    "question": "Which VehicleVariants are under VehicleFamily 321? Also tell me about ProductionProcess TFA2A011015A.",
+    "question": "Which VehicleVariants are under VehicleFamily @vehiclefamily001? Also tell me about ProductionProcess @productionprocess002.",
     "cypher1": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant) RETURN DISTINCT vv",
     "cypher2": "MATCH (pp:ProductionProcess {identifier: '@productionprocess002'}) RETURN pp"
   },
@@ -647,7 +647,7 @@
     "id": "L3-041",
     "level": 3,
     "complexity": "mixed",
-    "question": "What ProductionPlan and ProductionOrder is Vehicle @vehicle006 linked to? Also give me details on Part WHT001812A.",
+    "question": "What ProductionPlan and ProductionOrder is Vehicle @vehicle006 linked to? Also give me details on Part @part001.",
     "cypher1": "MATCH (:Vehicle {identifier: '@vehicle006'})<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:REALIZES_PLAN]->(:ProductionPlanVersion)<-[:CURRENT_VERSION]-(pl:ProductionPlan), (:ProductionPlanVersion)<-[:INSTANTIATES_PLAN]-(:ProductionOrderVersion)<-[:CURRENT_VERSION]-(po:ProductionOrder) RETURN pl, po",
     "cypher2": "MATCH (p:Part {identifier: '@part001'}) RETURN p"
   },
@@ -655,15 +655,15 @@
     "id": "L3-042",
     "level": 3,
     "complexity": "mixed",
-    "question": "Show me Vehicles that fall under ProductionOrder PO1015 through its plan and process. Also tell me about Shop TFA2A.",
+    "question": "Show me Vehicles that fall under ProductionOrder @productionorder001 through its plan and process. Also tell me about Shop HLA1A.",
     "cypher1": "MATCH (:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:PRODUCES_VEHICLE]->(v:Vehicle) RETURN v",
-    "cypher2": "MATCH (s:AssemblyShop {identifier: 'TFA2A'}) RETURN s"
+    "cypher2": "MATCH (s:AssemblyShop {identifier: 'HLA1A'}) RETURN s"
   },
   {
     "id": "L3-043",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which Suppliers provide Parts used in Vehicle @vehicle005? Also show details on ProductionOrder po1015.",
+    "question": "Which Suppliers provide Parts used in Vehicle @vehicle005? Also show details on ProductionOrder @productionorder001.",
     "cypher1": "MATCH (:Vehicle {identifier: '@vehicle005'})<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(:PartInstance)-[:SUPPLIED_BY]->(s:Supplier) RETURN DISTINCT s",
     "cypher2": "MATCH (po:ProductionOrder {identifier: '@productionorder001'})-[:CURRENT_VERSION]->(pov:ProductionOrderVersion) RETURN po, pov"
   },
@@ -671,7 +671,7 @@
     "id": "L3-044",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which ProductionOrders cover Vehicles of VehicleVariant @vehiclevariant004? Also give me details on Part 18D839462E.",
+    "question": "Which ProductionOrders cover Vehicles of VehicleVariant @vehiclevariant004? Also give me details on Part @part007.",
     "cypher1": "MATCH (:VehicleVariant {identifier: '@vehiclevariant004'})-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)<-[:CONFIGURED_TO]-(v:Vehicle)<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:REALIZES_PLAN]->(:ProductionPlanVersion)<-[:INSTANTIATES_PLAN]-(:ProductionOrderVersion)<-[:CURRENT_VERSION]-(po:ProductionOrder) RETURN DISTINCT v, po",
     "cypher2": "MATCH (p:Part {identifier: '@part007'}) RETURN p"
   },
@@ -679,7 +679,7 @@
     "id": "L3-045",
     "level": 3,
     "complexity": "mixed",
-    "question": "Who are the Personnel on ProductionProcesses under PL011015? Also show details for ManufacturingPlant tfa2.",
+    "question": "Who are the Personnel on ProductionProcesses under @productionplan001? Also show details for ManufacturingPlant @productionshop001.",
     "cypher1": "MATCH (:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(:ProductionPlanVersion)<-[:REALIZES_PLAN]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:HAS_PARTICIPANT]->(per:Personnel) RETURN DISTINCT per",
     "cypher2": "MATCH (mp:ManufacturingPlant {identifier: '@productionshop001'}) RETURN mp"
   },
@@ -687,7 +687,7 @@
     "id": "L3-046",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which ProductionPlans are under productionorders assigned to ManufacturingPlant TFA2? Also show VehicleFamily 321.",
+    "question": "Which ProductionPlans are under productionorders assigned to ManufacturingPlant @productionshop001? Also show VehicleFamily @vehiclefamily001.",
     "cypher1": "MATCH (:ManufacturingPlant {identifier: '@productionshop001'})<-[:ASSIGNED_TO]-(po:ProductionOrder)-[:CURRENT_VERSION]->(:ProductionOrderVersion)-[:INSTANTIATES_PLAN]->(:ProductionPlanVersion)<-[:CURRENT_VERSION]-(pl:ProductionPlan) RETURN DISTINCT po, pl",
     "cypher2": "MATCH (vf:VehicleFamily {identifier: '@vehiclefamily001'}) RETURN vf"
   },
@@ -695,7 +695,7 @@
     "id": "L3-047",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which ProductionShops handle Operations requiring Part WHT001812A? Also show Vehicle @vehicle001.",
+    "question": "Which ProductionShops handle Operations requiring Part @part001? Also show Vehicle @vehicle001.",
     "cypher1": "MATCH (:Part {identifier: '@part001'})-[:CURRENT_SPECIFICATION]->(:PartSpecification)<-[:REQUIRES_PART]-(:OperationVersion)<-[:CURRENT_VERSION]-(o:Operation)-[:QUALIFIED_FOR]->(ps:ProductionShop) RETURN DISTINCT o, ps",
     "cypher2": "MATCH (v:Vehicle {identifier: '@vehicle001'}) RETURN v"
   },
@@ -703,7 +703,7 @@
     "id": "L3-048",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which VehicleVariants do Vehicles from ProductionProcess TFA2A011015A belong to? Also show details on ProductionPlan PL011015.",
+    "question": "Which VehicleVariants do Vehicles from ProductionProcess @productionprocess002 belong to? Also show details on ProductionPlan @productionplan001.",
     "cypher1": "MATCH (:ProductionProcess {identifier: '@productionprocess002'})-[:PRODUCES_VEHICLE]->(v:Vehicle)-[:CONFIGURED_TO]->(:VehicleVariantSpecification)<-[:CURRENT_SPECIFICATION]-(vv:VehicleVariant) RETURN DISTINCT v, vv",
     "cypher2": "MATCH (pl:ProductionPlan {identifier: '@productionplan001'})-[:CURRENT_VERSION]->(plv:ProductionPlanVersion) RETURN pl, plv"
   },
@@ -711,14 +711,14 @@
     "id": "L3-049",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which Vehicles under VehicleFamily 321 and were assembled using parts from Supplier 10086?",
+    "question": "Which Vehicles under VehicleFamily @vehiclefamily001 and were assembled using parts from Supplier @supplier005?",
     "cypher": "MATCH (:VehicleFamily {identifier: '@vehiclefamily001'})-[:HAS_VARIANT]->(vv:VehicleVariant)-[:CURRENT_SPECIFICATION]->(:VehicleVariantSpecification)<-[:CONFIGURED_TO]-(v:Vehicle), (v)<-[:PRODUCES_VEHICLE]-(:ProductionProcess)-[:HAS_TASK]->(:OperationalTask)-[:CONSUMES_PART]->(:PartInstance)-[:SUPPLIED_BY]->(:Supplier {identifier: '@supplier005'}) RETURN DISTINCT vv, v"
   },
   {
     "id": "L3-050",
     "level": 3,
     "complexity": "mixed",
-    "question": "Which ProductionOrders orders VehicleVariant @vehiclevariant004, or are assigned to ManufacturingPlant TFA2?",
+    "question": "Which ProductionOrders orders VehicleVariant @vehiclevariant004, or are assigned to ManufacturingPlant @productionshop001?",
     "cypher": "MATCH (:VehicleVariant {identifier: '@vehiclevariant004'})<-[:ORDERS_VARIANT]-(:ProductionOrderVersion)<-[:CURRENT_VERSION]-(po:ProductionOrder) RETURN DISTINCT po UNION MATCH (po:ProductionOrder)-[:ASSIGNED_TO]->(:ManufacturingPlant {identifier: '@productionshop001'}) RETURN DISTINCT po"
   }
 ]
