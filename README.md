@@ -1,4 +1,4 @@
-# AUTOAM — Automotive Knowledge-Based System
+# Human-in-loop agentic retrieval system
 
 A graph-based knowledge management system for automotive manufacturing, powered by **Neo4j**, **neomodel**, **Streamlit**, and **OpenAI GPT-4o**.
 
